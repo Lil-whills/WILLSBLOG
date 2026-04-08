@@ -1,14 +1,63 @@
 from django.shortcuts import get_object_or_404, render
+from django.db.models import Q
 from .models import Blog
 
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    blogs = Blog.objects.filter(status='published').order_by('-created_at')[:3]
+
+    technology_blogs = Blog.objects.filter(category='technology', status='published').order_by('-created_at')[:3]
+
+    health_blogs = Blog.objects.filter(category='health', status='published').order_by('-created_at')[:3]
+
+    economics_blogs = Blog.objects.filter(category='economics', status='published').order_by('-created_at')[:3]
+
+    lifestyle_blogs = Blog.objects.filter(category='lifestyle', status='published').order_by('-created_at')[:3]
+
+    return render(request, 'index.html', {'blogs': blogs, 'technology_blogs': technology_blogs, 'health_blogs': health_blogs, 'economics_blogs': economics_blogs, 'lifestyle_blogs': lifestyle_blogs})
 
 def allblogs(request):
-    blogs = Blog.objects.filter(status='published').order_by('-created_at')
-    return render(request, 'allblogs.html', {'blogs': blogs})
+    blogs = Blog.objects.filter(status='published')
+    query = request.GET.get('q', '').strip()
+    category = request.GET.get('category', '').strip()
+    is_premium = request.GET.get('is_premium', '').strip().lower()
+    sort = request.GET.get('sort', 'newest').strip().lower()
+
+    if query:
+        blogs = blogs.filter(
+            Q(title__icontains=query)
+            | Q(excerpt__icontains=query)
+            | Q(author__icontains=query)
+        )
+
+    if category:
+        blogs = blogs.filter(category=category)
+
+    if is_premium == 'true':
+        blogs = blogs.filter(is_premium=True)
+    elif is_premium == 'false':
+        blogs = blogs.filter(is_premium=False)
+
+    if sort == 'oldest':
+        blogs = blogs.order_by('created_at')
+    elif sort == 'price_low_high':
+        blogs = blogs.order_by('price', '-created_at')
+    elif sort == 'price_high_low':
+        blogs = blogs.order_by('-price', '-created_at')
+    else:
+        blogs = blogs.order_by('-created_at')
+
+
+    context = {
+        'blogs': blogs,
+        'query': query,
+        'category': category,
+        'is_premium': is_premium,
+        'sort': sort,
+    }
+
+    return render(request, 'allblogs.html', context)
 
 def dashboard(request):
     return render(request, 'dashboard.html')

@@ -78,91 +78,39 @@
 
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <!-- Post 1 -->
+         {% for blog in blogs %}
         <article class="bg-white border rounded-lg overflow-hidden shadow-sm">
-          <img src="{% static 'images/sbl2.jpg' %}" alt="AI article" class="w-full h-52 object-cover" />
+          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="w-full h-52 object-cover" />
           <div class="p-5">
             <div class="flex items-center justify-between gap-3 mb-3">
-              <span class="text-xs font-semibold uppercase tracking-wide text-blue-600">Technology</span>
-              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Premium</span>
+              <span class="text-xs font-semibold uppercase tracking-wide text-blue-600">{{ blog.category }}</span>
+              {% if blog.is_premium %}
+              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded">premium</span>
+              {% else %}
+              <span class="text-xs font-semibold bg-green-100 text-green-800 px-2 py-1 rounded">free</span>
+              {% endif %}
             </div>
 
             <h3 class="text-xl font-semibold mb-2">
-              The Future of AI in Everyday Life
+              {{ blog.title }}
             </h3>
             <p class="text-sm text-gray-600 mb-4">
-              Exploring how artificial intelligence is shaping our daily routines and future possibilities.
+              {{ blog.excerpt }}
             </p>
             <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-              <span>By John Doe</span>
-              <span>June 15, 2024</span>
+              <span>{{blog.author}}</span>
+              <span>{{blog.created_at|date:"F d, Y"}}</span>
             </div>
 
             <div class="flex items-center justify-between">
               <span class="font-semibold text-gray-900">$9.99</span>
-              <a href="{% url 'blogdetails' %}" class="text-blue-600 font-medium hover:underline">
+              <a href="{% url 'blogdetails' blog.id %}" class="text-blue-600 font-medium hover:underline">
                 View Details
               </a>
             </div>
           </div>
         </article>
-
-        <!-- Post 2 -->
-        <article class="bg-white border rounded-lg overflow-hidden shadow-sm">
-          <img src="{% static 'images/sbl5.jpg' %}" alt="Healthy lifestyle article" class="w-full h-52 object-cover" />
-          <div class="p-5">
-            <div class="flex items-center justify-between gap-3 mb-3">
-              <span class="text-xs font-semibold uppercase tracking-wide text-green-600">Health</span>
-              <span class="text-xs font-semibold bg-green-100 text-green-700 px-2 py-1 rounded">Free</span>
-            </div>
-
-            <h3 class="text-xl font-semibold mb-2">
-              10 Tips for a Healthy Lifestyle
-            </h3>
-
-            <p class="text-sm text-gray-600 mb-4">
-              Discover practical tips to improve your health and well-being in simple everyday ways.
-            </p>
-            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-              <span>By Jane Smith</span>
-              <span>June 10, 2024</span>
-            </div>
-
-            <a href="{% url 'blogdetails' %}" class="text-blue-600 font-medium hover:underline">
-              Read More
-            </a>
-          </div>
-        </article>
-
-        <!-- Post 3 -->
-        <article class="bg-white border rounded-lg overflow-hidden shadow-sm">
-          <img src="{% static 'images/sbl7.jpg' %}" alt="Finance article" class="w-full h-52 object-cover" />
-          <div class="p-5">
-            <div class="flex items-center justify-between gap-3 mb-3">
-              <span class="text-xs font-semibold uppercase tracking-wide text-purple-600">Economics</span>
-              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Premium</span>
-            </div>
-
-            <h3 class="text-xl font-semibold mb-2">
-              5 Essential Financial Tips for Young Adults
-            </h3>
-
-            <p class="text-sm text-gray-600 mb-4">
-              A practical guide to managing money, saving early, and building good financial habits.
-            </p>
-
-            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-              <span>By Eva Davis</span>
-              <span>June 08, 2024</span>
-            </div>
-
-            <div class="flex items-center justify-between">
-              <span class="font-semibold text-gray-900">$9.99</span>
-              <a href="{% url 'blogdetails' %}" class="text-blue-600 font-medium hover:underline">
-                View Details
-              </a>
-            </div>
-          </div>
-        </article>
+        {% endfor %}
       </div>
     </section>
 
@@ -174,35 +122,41 @@
       </div>
 
       <div class="grid gap-6 md:grid-cols-2">
-        <article class="bg-white border rounded-lg overflow-hidden shadow-sm">
-          <img src="{% static 'images/sbl1.jpg' %}" alt="Programming article" class="w-full h-52 object-cover" />
+        {% for blog in technology_blogs %}
+        <article class="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+          {% if blog.image %}
+          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="h-52 w-full object-cover" />
+          {% else %}
+          <img src="{% static 'images/sbl2.jpg' %}" alt="{{ blog.title }}" class="h-52 w-full object-cover" />
+          {% endif %}
           <div class="p-5">
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-semibold uppercase tracking-wide text-blue-600">Technology</span>
-              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Premium</span>
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <span class="text-xs font-semibold uppercase tracking-wide text-blue-600">{{ blog.category|title }}</span>
+              {% if blog.is_premium %}
+                <span class="rounded bg-yellow-100 px-2 py-1 text-xs font-semibold text-yellow-800">Premium</span>
+              {% else %}
+                <span class="rounded bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">Free</span>
+              {% endif %}
             </div>
-            <h3 class="text-lg font-semibold mb-2">Top 5 Programming Languages to Learn in 2024</h3>
-            <p class="text-sm text-gray-600 mb-4">
-              A simple guide to the most relevant programming languages for modern developers.
+            <h3 class="mb-2 text-lg font-semibold text-gray-900">{{ blog.title }}</h3>
+            <p class="mb-4 text-sm text-gray-600">
+              {{ blog.excerpt }}
             </p>
-            <a href="{% url 'blogdetails' %}" class="text-blue-600 font-medium hover:underline">View Details</a>
+            <div class="flex items-center justify-between gap-3 text-sm text-gray-500">
+              <span>By {{ blog.author }}</span>
+              <span>{{ blog.created_at|date:"F j, Y" }}</span>
+            </div>
+            <div class="mt-4 flex items-center justify-between">
+              {% if blog.is_premium %}
+                <span class="font-semibold text-gray-900">${{ blog.price|floatformat:2 }}</span>
+              {% else %}
+                <span class="font-semibold text-gray-900">Free</span>
+              {% endif %}
+              <a href="{% url 'blogdetails' blog.id %}" class="font-medium text-blue-600 hover:underline">View Details</a>
+            </div>
           </div>
         </article>
-
-        <article class="bg-white border rounded-lg overflow-hidden shadow-sm">
-          <img src="{% static 'images/sbl8.jpg' %}" alt="Social media article" class="w-full h-52 object-cover" />
-          <div class="p-5">
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-semibold uppercase tracking-wide text-blue-600">Technology</span>
-              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Premium</span>
-            </div>
-            <h3 class="text-lg font-semibold mb-2">The Evolution of Social Media</h3>
-            <p class="text-sm text-gray-600 mb-4">
-              Tracing how social media changed communication, business, and online culture.
-            </p>
-            <a href="{% url 'blogdetails' %}" class="text-blue-600 font-medium hover:underline">View Details</a>
-          </div>
-        </article>
+        {% endfor %}
       </div>
     </section>
 
@@ -214,35 +168,37 @@
       </div>
 
       <div class="grid gap-6 md:grid-cols-2">
-        <article class="bg-white border rounded-lg overflow-hidden shadow-sm">
-          <img src="{% static 'images/sbl3.jpg' %}" alt="Meditation article" class="w-full h-52 object-cover" />
+        {% for blog in health_blogs %}
+        <article class="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+          {% if blog.image %}
+          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="h-52 w-full object-cover" />
+          {% else %}
+          <img src="{% static 'images/sbl2.jpg' %}" alt="{{ blog.title }}" class="h-52 w-full object-cover" />
+          {% endif %}
           <div class="p-5">
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-semibold uppercase tracking-wide text-green-600">Health</span>
-              <span class="text-xs font-semibold bg-green-100 text-green-700 px-2 py-1 rounded">Free</span>
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <span class="text-xs font-semibold uppercase tracking-wide text-emerald-600">{{ blog.category|title }}</span>
+              {% if blog.is_premium %}
+                <span class="rounded bg-yellow-100 px-2 py-1 text-xs font-semibold text-yellow-800">Premium</span>
+              {% else %}
+                <span class="rounded bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">Free</span>
+              {% endif %}
             </div>
-            <h3 class="text-lg font-semibold mb-2">The Benefits of Mindfulness Meditation</h3>
-            <p class="text-sm text-gray-600 mb-4">
-              Exploring the physical and mental benefits of mindfulness in daily life.
+            <h3 class="mb-2 text-lg font-semibold text-gray-900">{{ blog.title }}</h3>
+            <p class="mb-4 text-sm text-gray-600">
+              {{ blog.excerpt }}
             </p>
-            <a href="{% url 'blogdetails' %}" class="text-blue-600 font-medium hover:underline">Read More</a>
+            <div class="flex items-center justify-between gap-3 text-sm text-gray-500">
+              <span>By {{ blog.author }}</span>
+              <span>{{ blog.created_at|date:"F j, Y" }}</span>
+            </div>
+            <div class="mt-4 flex items-center justify-between">
+              <span class="font-semibold text-gray-900">Free</span>
+              <a href="{% url 'blogdetails' blog.id %}" class="font-medium text-blue-600 hover:underline">Read More</a>
+            </div>
           </div>
         </article>
-
-        <article class="bg-white border rounded-lg overflow-hidden shadow-sm">
-          <img src="{% static 'images/sbl5.jpg' %}" alt="Healthy lifestyle article" class="w-full h-52 object-cover" />
-          <div class="p-5">
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-semibold uppercase tracking-wide text-green-600">Health</span>
-              <span class="text-xs font-semibold bg-green-100 text-green-700 px-2 py-1 rounded">Free</span>
-            </div>
-            <h3 class="text-lg font-semibold mb-2">10 Tips for a Healthy Lifestyle</h3>
-            <p class="text-sm text-gray-600 mb-4">
-              Simple habits you can build to improve health, energy, and well-being.
-            </p>
-            <a href="{% url 'blogdetails' %}" class="text-blue-600 font-medium hover:underline">Read More</a>
-          </div>
-        </article>
+        {% endfor %}
       </div>
     </section>
 
@@ -254,35 +210,40 @@
       </div>
 
       <div class="grid gap-6 md:grid-cols-2">
-        <article class="bg-white border rounded-lg overflow-hidden shadow-sm">
-          <img src="{% static 'images/sbl4.jpg' %}" alt="Electric vehicles article" class="w-full h-52 object-cover" />
+        {% for blog in economics_blogs %}
+        <article class="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+          {% if blog.image %}
+          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="h-52 w-full object-cover" />
+          {% else %}
+          <img src="{% static 'images/sbl2.jpg' %}" alt="{{ blog.title }}" class="h-52 w-full object-cover" />
+          {% endif %}
           <div class="p-5">
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-semibold uppercase tracking-wide text-purple-600">Economics</span>
-              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Premium</span>
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <span class="text-xs font-semibold uppercase tracking-wide text-purple-600">{{ blog.category|title }}</span>
+              {% if blog.is_premium %}
+                <span class="rounded bg-yellow-100 px-2 py-1 text-xs font-semibold text-yellow-800">Premium</span>
+              {% else %}
+                <span class="rounded bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">Free</span>
+              {% endif %}
             </div>
-            <h3 class="text-lg font-semibold mb-2">The Rise of Electric Vehicles</h3>
-            <p class="text-sm text-gray-600 mb-4">
-              Looking at how electric vehicles are reshaping markets and the future of transport.
-            </p>
-            <a href="{% url 'blogdetails' %}" class="text-blue-600 font-medium hover:underline">View Details</a>
+            <h3 class="mb-2 text-lg font-semibold text-gray-900">{{ blog.title }}</h3>
+            <p class="mb-4 text-sm text-gray-600">
+              {{ blog.excerpt }}</p>
+            <div class="flex items-center justify-between gap-3 text-sm text-gray-500">
+              <span>By {{ blog.author }}</span>
+              <span>{{ blog.created_at|date:"F j, Y" }}</span>
+            </div>
+            <div class="mt-4 flex items-center justify-between">
+              {% if blog.is_premium %}
+                <span class="font-semibold text-gray-900">${{ blog.price|floatformat:2 }}</span>
+              {% else %}
+                <span class="font-semibold text-gray-900">Free</span>
+              {% endif %}
+              <a href="{% url 'blogdetails' blog.id %}" class="font-medium text-blue-600 hover:underline">View Details</a>
+            </div>
           </div>
         </article>
-
-        <article class="bg-white border rounded-lg overflow-hidden shadow-sm">
-          <img src="{% static 'images/sbl7.jpg' %}" alt="Financial tips article" class="w-full h-52 object-cover" />
-          <div class="p-5">
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-semibold uppercase tracking-wide text-purple-600">Economics</span>
-              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Premium</span>
-            </div>
-            <h3 class="text-lg font-semibold mb-2">5 Essential Financial Tips for Young Adults</h3>
-            <p class="text-sm text-gray-600 mb-4">
-              Budgeting, saving, and smarter decision-making for a stronger financial future.
-            </p>
-            <a href="{% url 'blogdetails' %}" class="text-blue-600 font-medium hover:underline">View Details</a>
-          </div>
-        </article>
+        {% endfor %}
       </div>
     </section>
   </main>

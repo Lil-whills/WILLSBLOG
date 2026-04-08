@@ -58,10 +58,10 @@
           </p>
 
           <div class="flex flex-wrap gap-3">
-            <a href="#" class="bg-gray-900 text-white px-5 py-3 rounded-md hover:bg-gray-800 transition">
+            <a href="{% url 'allblogs' %}?is_premium=false" class="bg-gray-900 text-white px-5 py-3 rounded-md hover:bg-gray-800 transition">
               Free Blogs
             </a>
-            <a href="#" class="border border-gray-300 px-5 py-3 rounded-md hover:bg-gray-100 transition">
+            <a href="{% url 'allblogs' %}?is_premium=true" class="border border-gray-300 px-5 py-3 rounded-md hover:bg-gray-100 transition">
               Premium Blogs
             </a>
           </div>
@@ -72,10 +72,13 @@
     <!-- Search / Filter / Sort -->
     <section class="max-w-6xl mx-auto px-4 py-8">
       <div class="bg-white border rounded-xl p-4 md:p-6 shadow-sm space-y-5">
+        <form method="get" action="{% url 'allblogs' %}">
 
         <!-- Search -->
         <div class="flex flex-col gap-3 md:flex-row">
           <input
+            name="q"
+            value="{{ query }}"
             type="text"
             placeholder="Search blogs..."
             class="w-full border border-gray-300 rounded-md px-4 py-3 outline-none focus:border-blue-500"
@@ -87,11 +90,18 @@
 
         <!-- Category Filters -->
         <div class="flex flex-wrap gap-3">
-          <a href="#" class="px-4 py-2 rounded-full bg-gray-900 text-white text-sm font-medium">All</a>
-          <a href="#" class="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-sm font-medium transition">Technology</a>
-          <a href="#" class="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-sm font-medium transition">Health</a>
-          <a href="#" class="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-sm font-medium transition">Economics</a>
-          <a href="#" class="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-sm font-medium transition">Lifestyle</a>
+          <select name="category" id="category-select" class="border border-gray-300 rounded-md px-3 py-2 bg-white outline-none focus:border-blue-500">
+            <option value="">All Categories</option>
+            <option value="technology" {% if category == 'technology' %}selected{% endif %}>Technology</option>
+            <option value="health" {% if category == 'health' %}selected{% endif %}>Health</option>
+            <option value="economics" {% if category == 'economics' %}selected{% endif %}>Economics</option>
+            <option value="lifestyle" {% if category == 'lifestyle' %}selected{% endif %}>Lifestyle</option>
+          </select>
+          <select name="is_premium" id="premium-select" class="border border-gray-300 rounded-md px-3 py-2 bg-white outline-none focus:border-blue-500">
+            <option value="">All Types</option>
+            <option value="true" {% if is_premium == 'true' %}selected{% endif %}>Premium</option>
+            <option value="false" {% if is_premium == 'false' %}selected{% endif %}>Free</option>
+          </select>
         </div>
 
         <!-- Sort -->
@@ -103,19 +113,27 @@
           <div class="flex items-center gap-3">
             <label for="sort-select" class="text-sm font-medium text-gray-700">Sort by:</label>
             <select
+              name="sort"
               id="sort-select"
               class="border border-gray-300 rounded-md px-3 py-2 bg-white outline-none focus:border-blue-500"
             >
-              <option value="newest">Newest</option>
-              <option value="oldest">Oldest</option>
-              <option value="most-popular">Most Popular</option>
-              <option value="price-low-high">Price: Low to High</option>
-              <option value="price-high-low">Price: High to Low</option>
-              <option value="free">Free</option>
-              <option value="premium">Premium</option>
+              <option value="newest" {% if sort == 'newest' %}selected{% endif %}>Newest</option>
+              <option value="oldest" {% if sort == 'oldest' %}selected{% endif %}>Oldest</option>
+              <option value="price_low_high" {% if sort == 'price_low_high' %}selected{% endif %}>Price: Low to High</option>
+              <option value="price_high_low" {% if sort == 'price_high_low' %}selected{% endif %}>Price: High to Low</option>
             </select>
           </div>
         </div>
+
+          <button type="submit">
+            apply filters
+          </button>
+          <div>
+            <a href="{% url 'allblogs' %}" class="text-blue-600 hover:underline">
+              Reset Filters
+            </a>
+          </div>
+        </form>
 
       </div>
     </section>
@@ -165,6 +183,12 @@
         </article>
          {% endfor %}
       </div>
+
+      {% if not blogs %}
+      <div class="mt-8 rounded-lg border border-dashed border-gray-300 bg-white p-8 text-center text-gray-600">
+        No blogs matched your search/filter. Try adjusting your criteria.
+      </div>
+      {% endif %}
     </section>
   </main>
 
