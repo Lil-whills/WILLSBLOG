@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WILLSBLOG | Payment</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-gray-900 text-white border-b border-gray-800">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <a href="index.html" class="text-2xl font-bold tracking-wide">WILLSBLOG</a>
+
+      <nav>
+        <ul class="flex flex-wrap items-center gap-3 text-sm md:text-base">
+          <li>
+            <a href="index.html" class="px-3 py-2 rounded-md hover:bg-gray-800 transition">
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="allblogs.html" class="px-3 py-2 rounded-md hover:bg-gray-800 transition">
+              All Blogs
+            </a>
+          </li>
+          <li>
+            <a href="dashboard.html" class="px-3 py-2 rounded-md hover:bg-gray-800 transition">
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="payment.html" class="px-3 py-2 rounded-md bg-gray-800 hover:bg-gray-700 transition">
+              Payment
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="flex-1 py-10 px-4">
+    <section class="max-w-6xl mx-auto">
+      <div class="mb-8">
+        <a href="blogdetail.html" class="inline-flex items-center text-sm font-medium text-blue-600 hover:underline">
+          ← Back to Blog Details
+        </a>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-3">
+        <!-- Blog Summary -->
+        <div class="lg:col-span-2 bg-white border rounded-xl shadow-sm overflow-hidden">
+          <img
+            src="images/sbl2.jpg"
+            alt="Premium blog cover"
+            class="w-full h-64 md:h-80 object-cover"
+          />
+
+          <div class="p-6 md:p-8">
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+              <span class="text-xs font-semibold uppercase tracking-wide text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                Technology
+              </span>
+              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">
+                Premium
+              </span>
+            </div>
+
+            <h1 class="text-2xl md:text-4xl font-bold leading-tight mb-4">
+              The Future of AI in Everyday Life
+            </h1>
+
+            <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-5">
+              <span>By John Doe</span>
+              <span>•</span>
+              <span>June 15, 2024</span>
+              <span>•</span>
+              <span>8 min read</span>
+            </div>
+
+            <p class="text-gray-600 text-base md:text-lg mb-6">
+              Exploring how artificial intelligence is shaping our daily routines and future possibilities.
+              Complete payment to unlock the full article and retain access whenever you return to this blog with your account.
+            </p>
+
+            <div class="bg-gray-50 border rounded-lg p-4">
+              <h2 class="text-lg font-semibold mb-3">What you get after payment</h2>
+              <div class="space-y-2 text-sm text-gray-600">
+                <p>• Full access to this premium blog post</p>
+                <p>• Access tied to your account after successful payment verification</p>
+                <p>• Ability to reopen the article later without repurchasing</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Card -->
+        <aside class="bg-white border rounded-xl shadow-sm p-6 h-fit">
+          <h2 class="text-xl font-bold mb-5">Payment Summary</h2>
+
+          <div class="space-y-4 border-b pb-5 mb-5">
+            <div class="flex items-center justify-between gap-4">
+              <span class="text-sm text-gray-600">Article</span>
+              <span class="text-sm font-medium text-right">The Future of AI in Everyday Life</span>
+            </div>
+
+            <div class="flex items-center justify-between gap-4">
+              <span class="text-sm text-gray-600">Access Type</span>
+              <span class="text-sm font-medium">Premium</span>
+            </div>
+
+            <div class="flex items-center justify-between gap-4">
+              <span class="text-sm text-gray-600">Price</span>
+              <span class="text-sm font-medium">₵50.00</span>
+            </div>
+
+            <div class="flex items-center justify-between gap-4">
+              <span class="text-sm text-gray-600">Processing Fee</span>
+              <span class="text-sm font-medium">₵0.00</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mb-6">
+            <span class="text-base font-semibold">Total</span>
+            <span class="text-2xl font-bold text-gray-900">₵50.00</span>
+          </div>
+
+          <form action="#" method="POST" class="space-y-4">
+            <button
+              type="submit"
+              class="w-full bg-gray-900 text-white py-3 rounded-md font-medium hover:bg-gray-800 transition"
+            >
+              Proceed to Payment
+            </button>
+
+            <a
+              href="blogdetail.html"
+              class="block w-full text-center border border-gray-300 py-3 rounded-md font-medium hover:bg-gray-100 transition"
+            >
+              Cancel
+            </a>
+          </form>
+
+          <p class="text-xs text-gray-500 mt-5 leading-6">
+            Payment access will later be verified securely on the backend before this premium article is unlocked.
+          </p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-sm flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <p>&copy; 2026 WILLSBLOG. All rights reserved.</p>
+      <p>Built for learning Django deeply.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

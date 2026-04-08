@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WILLSBLOG | All Blogs</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-gray-900 text-white border-b border-gray-800">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <a href="index.html" class="text-2xl font-bold tracking-wide">WILLSBLOG</a>
+
+      <nav>
+        <ul class="flex flex-wrap items-center gap-3 text-sm md:text-base">
+          <li>
+            <a href="index.html" class="px-3 py-2 rounded-md hover:bg-gray-800 transition">
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="allblogs.html" class="px-3 py-2 rounded-md bg-gray-800 hover:bg-gray-700 transition">
+              All Blogs
+            </a>
+          </li>
+          <li>
+            <a href="login.html" class="px-3 py-2 rounded-md hover:bg-gray-800 transition">
+              Login
+            </a>
+          </li>
+          <li>
+            <a href="register.html" class="px-3 py-2 rounded-md border border-gray-600 hover:bg-gray-800 transition">
+              Register
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="bg-white border-b">
+      <div class="max-w-6xl mx-auto px-4 py-12 md:py-16">
+        <div class="max-w-3xl">
+          <p class="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-3">
+            Browse Articles
+          </p>
+          <h1 class="text-3xl md:text-5xl font-bold leading-tight mb-4">
+            Explore all our blog posts in one place
+          </h1>
+          <p class="text-gray-600 text-base md:text-lg mb-6">
+            Search through our articles, filter by category, and identify free or premium content easily.
+          </p>
+
+          <div class="flex flex-wrap gap-3">
+            <a href="#" class="bg-gray-900 text-white px-5 py-3 rounded-md hover:bg-gray-800 transition">
+              Free Blogs
+            </a>
+            <a href="#" class="border border-gray-300 px-5 py-3 rounded-md hover:bg-gray-100 transition">
+              Premium Blogs
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search / Filter / Sort -->
+    <section class="max-w-6xl mx-auto px-4 py-8">
+      <div class="bg-white border rounded-xl p-4 md:p-6 shadow-sm space-y-5">
+
+        <!-- Search -->
+        <div class="flex flex-col gap-3 md:flex-row">
+          <input
+            type="text"
+            placeholder="Search blogs..."
+            class="w-full border border-gray-300 rounded-md px-4 py-3 outline-none focus:border-blue-500"
+          />
+          <button class="bg-gray-900 text-white px-5 py-3 rounded-md hover:bg-gray-800 transition">
+            Search
+          </button>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap gap-3">
+          <a href="#" class="px-4 py-2 rounded-full bg-gray-900 text-white text-sm font-medium">All</a>
+          <a href="#" class="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-sm font-medium transition">Technology</a>
+          <a href="#" class="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-sm font-medium transition">Health</a>
+          <a href="#" class="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-sm font-medium transition">Economics</a>
+          <a href="#" class="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-sm font-medium transition">Lifestyle</a>
+        </div>
+
+        <!-- Sort -->
+        <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <p class="text-sm text-gray-500">
+            Showing all available blog posts
+          </p>
+
+          <div class="flex items-center gap-3">
+            <label for="sort-select" class="text-sm font-medium text-gray-700">Sort by:</label>
+            <select
+              id="sort-select"
+              class="border border-gray-300 rounded-md px-3 py-2 bg-white outline-none focus:border-blue-500"
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="most-popular">Most Popular</option>
+              <option value="price-low-high">Price: Low to High</option>
+              <option value="price-high-low">Price: High to Low</option>
+              <option value="free">Free</option>
+              <option value="premium">Premium</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="max-w-6xl mx-auto px-4 pb-12">
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+        <!-- Post 1 -->
+        <article class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+          <img src="images/sbl2.jpg" alt="AI article" class="w-full h-52 object-cover" />
+          <div class="p-5">
+            <div class="flex items-center justify-between gap-3 mb-3">
+              <span class="text-xs font-semibold uppercase tracking-wide text-blue-600">Technology</span>
+              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Premium</span>
+            </div>
+
+            <h3 class="text-xl font-semibold mb-2">
+              The Future of AI in Everyday Life
+            </h3>
+
+            <p class="text-sm text-gray-600 mb-4">
+              Exploring how artificial intelligence is shaping our daily routines and future possibilities.
+            </p>
+
+            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+              <span>By John Doe</span>
+              <span>June 15, 2024</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-gray-900">$9.99</span>
+              <a href="blogdetail.html" class="text-blue-600 font-medium hover:underline">
+                View Details
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 2 -->
+        <article class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+          <img src="images/sbl5.jpg" alt="Healthy lifestyle article" class="w-full h-52 object-cover" />
+          <div class="p-5">
+            <div class="flex items-center justify-between gap-3 mb-3">
+              <span class="text-xs font-semibold uppercase tracking-wide text-green-600">Health</span>
+              <span class="text-xs font-semibold bg-green-100 text-green-700 px-2 py-1 rounded">Free</span>
+            </div>
+
+            <h3 class="text-xl font-semibold mb-2">
+              10 Tips for a Healthy Lifestyle
+            </h3>
+
+            <p class="text-sm text-gray-600 mb-4">
+              Discover practical tips to improve your health and well-being in simple everyday ways.
+            </p>
+
+            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+              <span>By Jane Smith</span>
+              <span>June 10, 2024</span>
+            </div>
+
+            <a href="blogdetail.html" class="text-blue-600 font-medium hover:underline">
+              Read More
+            </a>
+          </div>
+        </article>
+
+        <!-- Post 3 -->
+        <article class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+          <img src="images/sbl7.jpg" alt="Finance article" class="w-full h-52 object-cover" />
+          <div class="p-5">
+            <div class="flex items-center justify-between gap-3 mb-3">
+              <span class="text-xs font-semibold uppercase tracking-wide text-purple-600">Economics</span>
+              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Premium</span>
+            </div>
+
+            <h3 class="text-xl font-semibold mb-2">
+              5 Essential Financial Tips for Young Adults
+            </h3>
+
+            <p class="text-sm text-gray-600 mb-4">
+              A practical guide to managing money, saving early, and building good financial habits.
+            </p>
+
+            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+              <span>By Eva Davis</span>
+              <span>June 08, 2024</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-gray-900">$9.99</span>
+              <a href="blogdetail.html" class="text-blue-600 font-medium hover:underline">
+                View Details
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 4 -->
+        <article class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+          <img src="images/sbl1.jpg" alt="Programming article" class="w-full h-52 object-cover" />
+          <div class="p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-semibold uppercase tracking-wide text-blue-600">Technology</span>
+              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Premium</span>
+            </div>
+
+            <h3 class="text-xl font-semibold mb-2">
+              Top 5 Programming Languages to Learn in 2024
+            </h3>
+
+            <p class="text-sm text-gray-600 mb-4">
+              A simple guide to the most relevant programming languages for modern developers.
+            </p>
+
+            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+              <span>By Alice Williams</span>
+              <span>June 05, 2024</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-gray-900">$9.99</span>
+              <a href="blogdetail.html" class="text-blue-600 font-medium hover:underline">
+                View Details
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 5 -->
+        <article class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+          <img src="images/sbl8.jpg" alt="Social media article" class="w-full h-52 object-cover" />
+          <div class="p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-semibold uppercase tracking-wide text-blue-600">Technology</span>
+              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Premium</span>
+            </div>
+
+            <h3 class="text-xl font-semibold mb-2">
+              The Evolution of Social Media
+            </h3>
+
+            <p class="text-sm text-gray-600 mb-4">
+              Tracing how social media changed communication, business, and online culture.
+            </p>
+
+            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+              <span>By Frank Miller</span>
+              <span>June 03, 2024</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-gray-900">$9.99</span>
+              <a href="blogdetail.html" class="text-blue-600 font-medium hover:underline">
+                View Details
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 6 -->
+        <article class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+          <img src="images/sbl3.jpg" alt="Meditation article" class="w-full h-52 object-cover" />
+          <div class="p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-semibold uppercase tracking-wide text-green-600">Health</span>
+              <span class="text-xs font-semibold bg-green-100 text-green-700 px-2 py-1 rounded">Free</span>
+            </div>
+
+            <h3 class="text-xl font-semibold mb-2">
+              The Benefits of Mindfulness Meditation
+            </h3>
+
+            <p class="text-sm text-gray-600 mb-4">
+              Exploring the physical and mental benefits of mindfulness in daily life.
+            </p>
+
+            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+              <span>By Charlie Brown</span>
+              <span>June 01, 2024</span>
+            </div>
+
+            <a href="blogdetail.html" class="text-blue-600 font-medium hover:underline">
+              Read More
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-sm flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <p>&copy; 2026 WILLSBLOG. All rights reserved.</p>
+      <p>Built for learning Django deeply.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
