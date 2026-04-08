@@ -22,7 +22,8 @@ def register(request):
 def payment(request):
     return render(request, 'payment.html')
 
-def blogdetails(request, pk):
-    blog = get_object_or_404(Blog, pk=pk, status='published')
-    return render(request, 'blogdetails.html', {'blog': blog})
+def blogdetails(request, id):
+      blog = get_object_or_404(Blog, id=id)
+      return render(request, 'blogdetails.html', {'blog': blog})
+
 

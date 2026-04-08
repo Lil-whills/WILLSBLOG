@@ -60,7 +60,7 @@
       <!-- Image -->
       <div class="relative">
         <img
-          src="{% static 'images/sbl5.jpg' %}"
+          src="{{ blog.image.url }}"
           alt="Healthy lifestyle article"
           class="w-full h-64 md:h-96 object-cover"
         />
@@ -68,10 +68,10 @@
         <!-- Simple badge overlay only -->
         <div class="absolute top-4 left-4 flex items-center gap-2">
           <span class="text-xs font-semibold uppercase tracking-wide bg-white/90 text-green-700 px-3 py-1 rounded-full">
-            Health
+            {{ blog.category }}
           </span>
           <span class="text-xs font-semibold bg-green-100 text-green-700 px-3 py-1 rounded-full">
-            Free
+            {{ blog.is_premium|yesno:"Premium,Free" }}
           </span>
         </div>
       </div>
@@ -79,45 +79,24 @@
       <!-- Content -->
       <div class="p-5 md:p-8">
         <h1 class="text-2xl md:text-4xl font-bold leading-tight mb-4">
-          10 Tips for a Healthy Lifestyle
+          {{ blog.title }}
         </h1>
 
         <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-5">
-          <span>By Jane Smith</span>
+          <span>By {{ blog.author }}</span>
           <span>•</span>
-          <span>June 10, 2024</span>
+          <span>{{ blog.created_at|date:"F j, Y" }}</span>
           <span>•</span>
-          <span>8 min read</span>
+          <span>{{ blog.read_time }} min read</span>
         </div>
 
         <p class="text-base md:text-lg text-gray-600 mb-6">
-          Discover practical tips to improve your health and well-being in simple everyday ways.
+          {{ blog.excerpt }}
         </p>
 
         <div class="prose prose-gray max-w-none">
           <p class="text-gray-700 leading-8 mb-4">
-            Maintaining a healthy lifestyle does not always require extreme changes. In most cases,
-            small and consistent habits produce the best results over time. Good nutrition, regular
-            exercise, quality sleep, and effective stress management all work together to improve
-            your physical and mental well-being.
-          </p>
-
-          <p class="text-gray-700 leading-8 mb-4">
-            Start by paying attention to your daily routine. Drink enough water, choose balanced
-            meals, and find a physical activity you genuinely enjoy. Health becomes easier to
-            maintain when it fits naturally into your lifestyle instead of feeling like punishment.
-          </p>
-
-          <p class="text-gray-700 leading-8 mb-4">
-            Your mental health matters too. Rest, mindfulness, social connection, and taking breaks
-            from constant digital pressure can make a huge difference. A healthy life is not only
-            about the body. It is also about peace of mind, stability, and sustainability.
-          </p>
-
-          <p class="text-gray-700 leading-8">
-            As we move into the backend stage of WILLSBLOG, this page will later be rendered
-            dynamically from Django, and premium posts will conditionally show either the full
-            content or a locked preview depending on payment access.
+            {{blog.content}}
           </p>
         </div>
       </div>

@@ -157,7 +157,7 @@
 
             <div class="flex items-center justify-between">
               <span class="font-semibold text-gray-900">${{ blog.price|floatformat:2 }}</span>
-              <a href="{% url 'blogdetails' blog.pk %}" class="text-blue-600 font-medium hover:underline">
+              <a href="{% url 'blogdetails' blog.id %}" class="text-blue-600 font-medium hover:underline">
                 View Details
               </a>
             </div>
