@@ -37,6 +37,14 @@
               Post Blog
             </a>
           </li>
+          {% if user.is_authenticated %}
+          <li class="px-3 py-2 text-gray-200">Welcome {{ user.username }}</li>
+          <li>
+            <a href="{% url 'logout' %}" class="px-3 py-2 rounded-md border border-gray-600 hover:bg-gray-800 transition">
+              Logout
+            </a>
+          </li>
+          {% endif %}
         </ul>
       </nav>
     </div>

@@ -127,3 +127,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # Using BASE_DIR keeps existing files in backend/images reachable as /media/images/...
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR
+
+# Auth route settings for login_required and auth flow redirects.
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL = '/'
