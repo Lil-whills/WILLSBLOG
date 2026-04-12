@@ -8,17 +8,19 @@
   <title>WILLSBLOG | Home</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-white text-gray-900">
 
   <!-- Header -->
-  <header class="bg-gray-900 text-white border-b border-gray-800">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <a href="{% url 'index' %}" class="text-2xl font-bold tracking-wide">WILLSBLOG</a>
+  <header class="sticky top-0 z-50 bg-gray-950/95 text-gray-100 border-b border-gray-800 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4 py-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div class="flex items-center justify-center md:justify-start gap-3">
+        <a href="{% url 'index' %}" class="text-2xl font-bold tracking-wide">WILLSBLOG</a>
+      </div>
 
-      <nav>
-        <ul class="flex flex-wrap items-center gap-3 text-sm md:text-base">
+      <nav class="w-full md:w-auto">
+        <ul class="flex flex-wrap items-center justify-center md:justify-end gap-2 md:gap-3 text-xs sm:text-sm md:text-base">
           <li>
-            <a href="{% url 'index' %}" class="px-3 py-2 rounded-md bg-gray-800 hover:bg-gray-700 transition">
+            <a href="{% url 'index' %}" class="px-3 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-500 transition">
               Home
             </a>
           </li>
@@ -28,9 +30,8 @@
             </a>
           </li>
           {% if user.is_authenticated %}
-          <li class="px-3 py-2 text-gray-200">Welcome {{ user.username }}</li>
           <li>
-            <a href="{% url 'logout' %}" class="px-3 py-2 rounded-md border border-gray-600 hover:bg-gray-800 transition">
+            <a href="{% url 'logout' %}" class="px-3 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition">
               Logout
             </a>
           </li>
@@ -41,7 +42,7 @@
             </a>
           </li>
           <li>
-            <a href="{% url 'register' %}" class="px-3 py-2 rounded-md border border-gray-600 hover:bg-gray-800 transition">
+            <a href="{% url 'register' %}" class="px-3 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition">
               Register
             </a>
           </li>
@@ -53,24 +54,23 @@
 
   <main>
     <!-- Hero Section -->
-    <section class="bg-white border-b">
+    <section class="bg-white border-b border-gray-200">
       <div class="max-w-6xl mx-auto px-4 py-12 md:py-16">
         <div class="max-w-3xl">
-          <p class="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-3">
-            Welcome to WILLSBLOG
+          <p class="text-sm font-semibold uppercase tracking-wider text-emerald-600 mb-3">
+            Curated Knowledge Hub
           </p>
-          <h1 class="text-3xl md:text-5xl font-bold leading-tight mb-4">
-            Simple blogging platform for real learning and real backend practice
+          <h1 class="text-3xl md:text-5xl font-bold leading-tight mb-4 text-gray-900">
+            Premium Insights in Technology, Health, Economics & Lifestyle
           </h1>
           <p class="text-gray-600 text-base md:text-lg mb-6">
-            Read free articles, explore premium posts, and follow practical content across technology,
-            health, economics, and lifestyle.
+            Access expertly-curated articles from industry professionals. Choose from free content to explore or premium insights to deepen your knowledge across multiple domains.
           </p>
           <div class="flex flex-wrap gap-3">
-            <a href="{% url 'allblogs' %}" class="bg-gray-900 text-white px-5 py-3 rounded-md hover:bg-gray-800 transition">
+            <a href="{% url 'allblogs' %}" class="bg-emerald-700 text-white px-5 py-3 rounded-md hover:bg-emerald-500 transition">
               Explore All Blogs
             </a>
-            <a href="{% url 'register' %}" class="border border-gray-300 px-5 py-3 rounded-md hover:bg-gray-100 transition">
+            <a href="{% url 'register' %}" class="border border-gray-300 text-gray-800 px-5 py-3 rounded-md hover:bg-gray-100 transition">
               Join WILLSBLOG
             </a>
           </div>
@@ -79,28 +79,28 @@
     </section>
 
     <!-- Recent Posts -->
-    <section class="max-w-6xl mx-auto px-4 py-10">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-2xl font-bold">Recent Posts</h2>
-        <a href="{% url 'allblogs' %}" class="text-sm text-blue-600 hover:underline">View all</a>
+    <section class="max-w-6xl mx-auto px-4 py-8 md:py-10">
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-6">
+        <h2 class="text-2xl font-bold text-gray-900">Recent Posts</h2>
+        <a href="{% url 'allblogs' %}" class="text-sm text-emerald-400 hover:text-emerald-300 hover:underline">View all</a>
       </div>
 
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <!-- Post 1 -->
          {% for blog in blogs %}
-        <article class="bg-white border rounded-lg overflow-hidden shadow-sm">
-          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="w-full h-52 object-cover" />
+        <article class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="w-full h-48 sm:h-52 object-cover" />
           <div class="p-5">
             <div class="flex items-center justify-between gap-3 mb-3">
-              <span class="text-xs font-semibold uppercase tracking-wide text-blue-600">{{ blog.category }}</span>
+              <span class="text-xs font-semibold uppercase tracking-wide text-emerald-400">{{ blog.category }}</span>
               {% if blog.is_premium %}
-              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded">premium</span>
+              <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-300 px-2 py-1 rounded">premium</span>
               {% else %}
-              <span class="text-xs font-semibold bg-green-100 text-green-800 px-2 py-1 rounded">free</span>
+              <span class="text-xs font-semibold bg-gray-100 text-gray-700 px-2 py-1 rounded">free</span>
               {% endif %}
             </div>
 
-            <h3 class="text-xl font-semibold mb-2">
+            <h3 class="text-xl font-semibold mb-2 text-gray-900">
               {{ blog.title }}
             </h3>
             <p class="text-sm text-gray-600 mb-4">
@@ -112,10 +112,17 @@
             </div>
 
             <div class="flex items-center justify-between">
-              <span class="font-semibold text-gray-900">$9.99</span>
-              <a href="{% url 'blogdetails' blog.id %}" class="text-blue-600 font-medium hover:underline">
-                View Details
+              {% if blog.is_premium %}
+              <span class="font-semibold text-gray-900">${{ blog.price|floatformat:2 }}</span>
+              <a href="{% url 'payment' blog.id %}" class="text-emerald-400 font-medium hover:text-emerald-300 hover:underline">
+                Unlock Premium
               </a>
+              {% else %}
+              <span class="font-semibold text-gray-900">Free</span>
+              <a href="{% url 'blogdetails' blog.id %}" class="text-emerald-400 font-medium hover:text-emerald-300 hover:underline">
+                Read More
+              </a>
+              {% endif %}
             </div>
           </div>
         </article>
@@ -125,26 +132,26 @@
 
     <!-- Technology Section -->
     <section class="max-w-6xl mx-auto px-4 pb-10">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-2xl font-bold">Technology</h2>
-        <a href="{% url 'allblogs' %}" class="text-sm text-blue-600 hover:underline">View all</a>
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-6">
+        <h2 class="text-2xl font-bold text-gray-900">Technology</h2>
+        <a href="{% url 'allblogs' %}" class="text-sm text-emerald-400 hover:text-emerald-300 hover:underline">View all</a>
       </div>
 
       <div class="grid gap-6 md:grid-cols-2">
         {% for blog in technology_blogs %}
         <article class="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
           {% if blog.image %}
-          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="h-52 w-full object-cover" />
+          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="h-48 sm:h-52 w-full object-cover" />
           {% else %}
-          <img src="{% static 'images/sbl2.jpg' %}" alt="{{ blog.title }}" class="h-52 w-full object-cover" />
+          <img src="{% static 'images/sbl2.jpg' %}" alt="{{ blog.title }}" class="h-48 sm:h-52 w-full object-cover" />
           {% endif %}
           <div class="p-5">
             <div class="mb-3 flex items-center justify-between gap-3">
-              <span class="text-xs font-semibold uppercase tracking-wide text-blue-600">{{ blog.category|title }}</span>
+              <span class="text-xs font-semibold uppercase tracking-wide text-emerald-400">{{ blog.category|title }}</span>
               {% if blog.is_premium %}
-                <span class="rounded bg-yellow-100 px-2 py-1 text-xs font-semibold text-yellow-800">Premium</span>
+                <span class="rounded bg-emerald-50 border border-emerald-200 px-2 py-1 text-xs font-semibold text-emerald-700">Premium</span>
               {% else %}
-                <span class="rounded bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">Free</span>
+                <span class="rounded bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-700">Free</span>
               {% endif %}
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-900">{{ blog.title }}</h3>
@@ -161,7 +168,11 @@
               {% else %}
                 <span class="font-semibold text-gray-900">Free</span>
               {% endif %}
-              <a href="{% url 'blogdetails' blog.id %}" class="font-medium text-blue-600 hover:underline">View Details</a>
+              {% if blog.is_premium %}
+              <a href="{% url 'payment' blog.id %}" class="font-medium text-emerald-400 hover:text-emerald-300 hover:underline">Unlock Premium</a>
+              {% else %}
+              <a href="{% url 'blogdetails' blog.id %}" class="font-medium text-emerald-400 hover:text-emerald-300 hover:underline">Read More</a>
+              {% endif %}
             </div>
           </div>
         </article>
@@ -171,26 +182,26 @@
 
     <!-- Health Section -->
     <section class="max-w-6xl mx-auto px-4 pb-10">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-2xl font-bold">Health</h2>
-        <a href="{% url 'allblogs' %}" class="text-sm text-blue-600 hover:underline">View all</a>
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-6">
+        <h2 class="text-2xl font-bold text-gray-900">Health</h2>
+        <a href="{% url 'allblogs' %}" class="text-sm text-emerald-400 hover:text-emerald-300 hover:underline">View all</a>
       </div>
 
       <div class="grid gap-6 md:grid-cols-2">
         {% for blog in health_blogs %}
         <article class="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
           {% if blog.image %}
-          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="h-52 w-full object-cover" />
+          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="h-48 sm:h-52 w-full object-cover" />
           {% else %}
-          <img src="{% static 'images/sbl2.jpg' %}" alt="{{ blog.title }}" class="h-52 w-full object-cover" />
+          <img src="{% static 'images/sbl2.jpg' %}" alt="{{ blog.title }}" class="h-48 sm:h-52 w-full object-cover" />
           {% endif %}
           <div class="p-5">
             <div class="mb-3 flex items-center justify-between gap-3">
               <span class="text-xs font-semibold uppercase tracking-wide text-emerald-600">{{ blog.category|title }}</span>
               {% if blog.is_premium %}
-                <span class="rounded bg-yellow-100 px-2 py-1 text-xs font-semibold text-yellow-800">Premium</span>
+                <span class="rounded bg-emerald-50 border border-emerald-200 px-2 py-1 text-xs font-semibold text-emerald-700">Premium</span>
               {% else %}
-                <span class="rounded bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">Free</span>
+                <span class="rounded bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-700">Free</span>
               {% endif %}
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-900">{{ blog.title }}</h3>
@@ -202,8 +213,13 @@
               <span>{{ blog.created_at|date:"F j, Y" }}</span>
             </div>
             <div class="mt-4 flex items-center justify-between">
+              {% if blog.is_premium %}
+              <span class="font-semibold text-gray-900">${{ blog.price|floatformat:2 }}</span>
+              <a href="{% url 'payment' blog.id %}" class="font-medium text-emerald-400 hover:text-emerald-300 hover:underline">Unlock Premium</a>
+              {% else %}
               <span class="font-semibold text-gray-900">Free</span>
-              <a href="{% url 'blogdetails' blog.id %}" class="font-medium text-blue-600 hover:underline">Read More</a>
+              <a href="{% url 'blogdetails' blog.id %}" class="font-medium text-emerald-400 hover:text-emerald-300 hover:underline">Read More</a>
+              {% endif %}
             </div>
           </div>
         </article>
@@ -212,27 +228,27 @@
     </section>
 
     <!-- Economics Section -->
-    <section class="max-w-6xl mx-auto px-4 pb-12">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-2xl font-bold">Economics</h2>
-        <a href="{% url 'allblogs' %}" class="text-sm text-blue-600 hover:underline">View all</a>
+    <section class="max-w-6xl mx-auto px-4 pb-10">
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-6">
+        <h2 class="text-2xl font-bold text-gray-900">Economics</h2>
+        <a href="{% url 'allblogs' %}" class="text-sm text-emerald-400 hover:text-emerald-300 hover:underline">View all</a>
       </div>
 
       <div class="grid gap-6 md:grid-cols-2">
         {% for blog in economics_blogs %}
         <article class="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
           {% if blog.image %}
-          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="h-52 w-full object-cover" />
+          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="h-48 sm:h-52 w-full object-cover" />
           {% else %}
-          <img src="{% static 'images/sbl2.jpg' %}" alt="{{ blog.title }}" class="h-52 w-full object-cover" />
+          <img src="{% static 'images/sbl2.jpg' %}" alt="{{ blog.title }}" class="h-48 sm:h-52 w-full object-cover" />
           {% endif %}
           <div class="p-5">
             <div class="mb-3 flex items-center justify-between gap-3">
-              <span class="text-xs font-semibold uppercase tracking-wide text-purple-600">{{ blog.category|title }}</span>
+              <span class="text-xs font-semibold uppercase tracking-wide text-emerald-400">{{ blog.category|title }}</span>
               {% if blog.is_premium %}
-                <span class="rounded bg-yellow-100 px-2 py-1 text-xs font-semibold text-yellow-800">Premium</span>
+                <span class="rounded bg-emerald-50 border border-emerald-200 px-2 py-1 text-xs font-semibold text-emerald-700">Premium</span>
               {% else %}
-                <span class="rounded bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">Free</span>
+                <span class="rounded bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-700">Free</span>
               {% endif %}
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-900">{{ blog.title }}</h3>
@@ -248,7 +264,56 @@
               {% else %}
                 <span class="font-semibold text-gray-900">Free</span>
               {% endif %}
-              <a href="{% url 'blogdetails' blog.id %}" class="font-medium text-blue-600 hover:underline">View Details</a>
+              {% if blog.is_premium %}
+              <a href="{% url 'payment' blog.id %}" class="font-medium text-emerald-400 hover:text-emerald-300 hover:underline">Unlock Premium</a>
+              {% else %}
+              <a href="{% url 'blogdetails' blog.id %}" class="font-medium text-emerald-400 hover:text-emerald-300 hover:underline">Read More</a>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Lifestyle Section -->
+    <section class="max-w-6xl mx-auto px-4 pb-12">
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-6">
+        <h2 class="text-2xl font-bold text-gray-900">Lifestyle</h2>
+        <a href="{% url 'allblogs' %}" class="text-sm text-emerald-400 hover:text-emerald-300 hover:underline">View all</a>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        {% for blog in lifestyle_blogs %}
+        <article class="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+          {% if blog.image %}
+          <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="h-48 sm:h-52 w-full object-cover" />
+          {% else %}
+          <img src="{% static 'images/sbl2.jpg' %}" alt="{{ blog.title }}" class="h-48 sm:h-52 w-full object-cover" />
+          {% endif %}
+          <div class="p-5">
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <span class="text-xs font-semibold uppercase tracking-wide text-emerald-400">{{ blog.category|title }}</span>
+              {% if blog.is_premium %}
+                <span class="rounded bg-emerald-50 border border-emerald-200 px-2 py-1 text-xs font-semibold text-emerald-700">Premium</span>
+              {% else %}
+                <span class="rounded bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-700">Free</span>
+              {% endif %}
+            </div>
+            <h3 class="mb-2 text-lg font-semibold text-gray-900">{{ blog.title }}</h3>
+            <p class="mb-4 text-sm text-gray-600">{{ blog.excerpt }}</p>
+            <div class="flex items-center justify-between gap-3 text-sm text-gray-500">
+              <span>By {{ blog.author }}</span>
+              <span>{{ blog.created_at|date:"F j, Y" }}</span>
+            </div>
+            <div class="mt-4 flex items-center justify-between">
+              {% if blog.is_premium %}
+              <span class="font-semibold text-gray-900">${{ blog.price|floatformat:2 }}</span>
+              <a href="{% url 'payment' blog.id %}" class="font-medium text-emerald-400 hover:text-emerald-300 hover:underline">Unlock Premium</a>
+              {% else %}
+              <span class="font-semibold text-gray-900">Free</span>
+              <a href="{% url 'blogdetails' blog.id %}" class="font-medium text-emerald-400 hover:text-emerald-300 hover:underline">Read More</a>
+              {% endif %}
             </div>
           </div>
         </article>
@@ -258,12 +323,47 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-300">
-    <div class="max-w-6xl mx-auto px-4 py-6 text-sm flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-      <p>&copy; 2026 WILLSBLOG. All rights reserved.</p>
-      <p>Built for learning Django deeply.</p>
+  <footer class="bg-gray-950 text-gray-300 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto px-4 py-8">
+      <div class="grid gap-8 md:grid-cols-4 mb-8">
+        <div>
+          <h3 class="font-semibold text-white mb-3">WILLSBLOG</h3>
+          <p class="text-sm text-gray-400">Premium content across technology, health, economics, and lifestyle.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-3">Categories</h4>
+          <ul class="text-sm text-gray-400 space-y-1">
+            <li><a href="{% url 'allblogs' %}?category=technology" class="hover:text-emerald-400 transition">Technology</a></li>
+            <li><a href="{% url 'allblogs' %}?category=health" class="hover:text-emerald-400 transition">Health</a></li>
+            <li><a href="{% url 'allblogs' %}?category=economics" class="hover:text-emerald-400 transition">Economics</a></li>
+            <li><a href="{% url 'allblogs' %}?category=lifestyle" class="hover:text-emerald-400 transition">Lifestyle</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-3">Resources</h4>
+          <ul class="text-sm text-gray-400 space-y-1">
+            <li><a href="{% url 'allblogs' %}" class="hover:text-emerald-400 transition">All Blogs</a></li>
+            <li><a href="{% url 'allblogs' %}?is_premium=true" class="hover:text-emerald-400 transition">Premium</a></li>
+            <li><a href="{% url 'allblogs' %}?is_premium=false" class="hover:text-emerald-400 transition">Free Content</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-3">Follow Us</h4>
+          <div class="flex gap-3 text-sm">
+            <a href="#github" title="GitHub" class="text-gray-400 hover:text-emerald-400 transition">GitHub</a>
+            <a href="#tiktok" title="TikTok" class="text-gray-400 hover:text-emerald-400 transition">TikTok</a>
+            <a href="#linkedin" title="LinkedIn" class="text-gray-400 hover:text-emerald-400 transition">LinkedIn</a>
+            <a href="#facebook" title="Facebook" class="text-gray-400 hover:text-emerald-400 transition">Facebook</a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-6 text-sm text-gray-400 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <p>&copy; 2026 WILLSBLOG. All rights reserved.</p>
+        <p>Expertly curated content for continuous learning.</p>
+      </div>
     </div>
   </footer>
 
 </body>
 </html>
+

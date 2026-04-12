@@ -7,15 +7,17 @@
   <title>WILLSBLOG | Post Blog</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+<body class="bg-white text-gray-900 min-h-screen flex flex-col">
 
   <!-- Header -->
-  <header class="bg-gray-900 text-white border-b border-gray-800">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <a href="{% url 'index' %}" class="text-2xl font-bold tracking-wide">WILLSBLOG</a>
+  <header class="sticky top-0 z-50 bg-gray-950/95 text-gray-100 border-b border-gray-800 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4 py-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div class="flex items-center justify-center md:justify-start gap-3">
+        <a href="{% url 'index' %}" class="text-2xl font-bold tracking-wide">WILLSBLOG</a>
+      </div>
 
-      <nav>
-        <ul class="flex flex-wrap items-center gap-3 text-sm md:text-base">
+      <nav class="w-full md:w-auto">
+        <ul class="flex flex-wrap items-center justify-center md:justify-end gap-2 md:gap-3 text-xs sm:text-sm md:text-base">
           <li>
             <a href="{% url 'index' %}" class="px-3 py-2 rounded-md hover:bg-gray-800 transition">
               Home
@@ -23,13 +25,12 @@
           </li>
           <li>
             <a href="{% url 'allblogs' %}" class="px-3 py-2 rounded-md hover:bg-gray-800 transition">
-              All Blogs
+              Articles
             </a>
           </li>
           {% if user.is_authenticated %}
-          <li class="px-3 py-2 text-gray-200">Welcome {{ user.username }}</li>
           <li>
-            <a href="{% url 'logout' %}" class="px-3 py-2 rounded-md border border-gray-600 hover:bg-gray-800 transition">
+            <a href="{% url 'logout' %}" class="px-3 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition">
               Logout
             </a>
           </li>
@@ -41,13 +42,13 @@
           </li>
           <li>
             <a href="{% url 'register' %}" class="px-3 py-2 rounded-md hover:bg-gray-800 transition">
-              Register
+              Sign Up
             </a>
           </li>
           {% endif %}
           <li>
-            <a href="{% url 'postblog' %}" class="px-3 py-2 rounded-md bg-gray-800 hover:bg-gray-700 transition">
-              Post Blog
+            <a href="{% url 'postblog' %}" class="px-3 py-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-500 transition">
+              New Article
             </a>
           </li>
         </ul>
@@ -59,19 +60,18 @@
   <main class="flex-1 py-10 px-4">
     <section class="max-w-4xl mx-auto">
       <div class="mb-8">
-        <a href="{% url 'allblogs' %}" class="inline-flex items-center text-sm font-medium text-blue-600 hover:underline">
-          ← Back to All Blogs
+        <a href="{% url 'allblogs' %}" class="inline-flex items-center text-sm font-medium text-emerald-600 hover:text-emerald-500 transition">
+          ← Back to Articles
         </a>
       </div>
 
-      <div class="bg-white border rounded-xl shadow-sm overflow-hidden">
-        <div class="border-b px-6 py-5 md:px-8">
-          <h1>
-            {% if blog %}Edit Blog{% else %}Post a New Blog{% endif %}
+      <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+        <div class="border-b border-gray-200 px-6 py-5 md:px-8">
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900">
+            {% if blog %}Edit Article{% else %}Create New Article{% endif %}
           </h1>
           <p class="text-sm text-gray-600 mt-2">
-            Create and prepare a new article for WILLSBLOG. Later, Django will handle validation,
-            permissions, saving, and publishing.
+            Write and publish premium or free content for your audience. Set categories, pricing, and publication status before submitting.
           </p>
         </div>
 
@@ -87,9 +87,9 @@
               id="title"
               name="title"
               required
-              placeholder="Enter blog title"
+              placeholder="Enter article title"
               value="{% if blog %}{{ blog.title }}{% endif %}"
-              class="w-full border border-gray-300 rounded-md px-4 py-3 outline-none focus:border-blue-500"
+              class="w-full border border-gray-300 rounded-md px-4 py-3 text-gray-900 outline-none focus:border-emerald-500"
             />
           </div>
 
@@ -120,10 +120,10 @@
               rows="3"
               required
               placeholder="Write a short summary of the blog"
-              class="w-full border border-gray-300 rounded-md px-4 py-3 outline-none focus:border-blue-500 resize-none"
+              class="w-full border border-gray-300 rounded-md px-4 py-3 text-gray-900 outline-none focus:border-emerald-500 resize-none"
             >{% if blog %}{{ blog.excerpt }}{% endif %}</textarea>
             <p class="text-xs text-gray-500 mt-2">
-              This is the short preview users will see on the homepage and all blogs page.
+              This preview appears on the homepage and articles listing page.
             </p>
           </div>
 
@@ -174,7 +174,7 @@
               id="image"
               name="image"
               accept="image/*"
-              class="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none focus:border-blue-500"
+              class="w-full border border-gray-300 rounded-md px-4 py-3 bg-white text-gray-900 outline-none focus:border-emerald-500"
             />
             <p class="text-xs text-gray-500 mt-2">
               Upload a clean image that represents the article.
@@ -211,7 +211,7 @@
                 step="0.01"
                 placeholder="0.00"
                 value="{% if blog %}{{ blog.price }}{% endif %}"
-                class="w-full border border-gray-300 rounded-md px-4 py-3 outline-none focus:border-blue-500"
+                class="w-full border border-gray-300 rounded-md px-4 py-3 text-gray-900 outline-none focus:border-emerald-500"
               />
               <p class="text-xs text-gray-500 mt-2">
                 Leave as 0 for free blogs. Premium blogs will later require backend payment verification.
@@ -238,23 +238,23 @@
           <div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
             <a
               href="{% url 'allblogs' %}"
-              class="inline-flex justify-center items-center border border-gray-300 px-5 py-3 rounded-md hover:bg-gray-100 transition"
+              class="inline-flex justify-center items-center border border-gray-300 text-gray-900 px-5 py-3 rounded-md hover:bg-gray-100 transition font-medium"
             >
               Cancel
             </a>
             {% if blog %}
               <button
                 type="submit"
-                class="inline-flex justify-center items-center bg-gray-900 text-white px-5 py-3 rounded-md hover:bg-gray-800 transition"
+                class="inline-flex justify-center items-center bg-emerald-600 text-white px-5 py-3 rounded-md hover:bg-emerald-500 transition font-medium"
               >
-                Update Blog
+                Update Article
               </button>
             {% else %}
               <button
                 type="submit"
-                class="inline-flex justify-center items-center bg-gray-900 text-white px-5 py-3 rounded-md hover:bg-gray-800 transition"
+                class="inline-flex justify-center items-center bg-emerald-600 text-white px-5 py-3 rounded-md hover:bg-emerald-500 transition font-medium"
               >
-                Post Blog
+                Publish Article
             </button>
             {% endif %}
           </div>
@@ -264,12 +264,47 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-300">
-    <div class="max-w-6xl mx-auto px-4 py-6 text-sm flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-      <p>&copy; 2026 WILLSBLOG. All rights reserved.</p>
-      <p>Built for learning Django deeply.</p>
+  <footer class="bg-gray-950 text-gray-300 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto px-4 py-8">
+      <div class="grid gap-8 md:grid-cols-4 mb-8">
+        <div>
+          <h3 class="font-semibold text-white mb-3">WILLSBLOG</h3>
+          <p class="text-sm text-gray-400">Premium content across technology, health, economics, and lifestyle.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-3">Categories</h4>
+          <ul class="text-sm text-gray-400 space-y-1">
+            <li><a href="{% url 'allblogs' %}?category=technology" class="hover:text-emerald-400 transition">Technology</a></li>
+            <li><a href="{% url 'allblogs' %}?category=health" class="hover:text-emerald-400 transition">Health</a></li>
+            <li><a href="{% url 'allblogs' %}?category=economics" class="hover:text-emerald-400 transition">Economics</a></li>
+            <li><a href="{% url 'allblogs' %}?category=lifestyle" class="hover:text-emerald-400 transition">Lifestyle</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-3">Resources</h4>
+          <ul class="text-sm text-gray-400 space-y-1">
+            <li><a href="{% url 'index' %}" class="hover:text-emerald-400 transition">Home</a></li>
+            <li><a href="{% url 'dashboard' %}" class="hover:text-emerald-400 transition">Dashboard</a></li>
+            <li><a href="{% url 'allblogs' %}" class="hover:text-emerald-400 transition">All Articles</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-3">Follow Us</h4>
+          <div class="flex gap-3 text-sm">
+            <a href="#github" title="GitHub" class="text-gray-400 hover:text-emerald-400 transition">GitHub</a>
+            <a href="#tiktok" title="TikTok" class="text-gray-400 hover:text-emerald-400 transition">TikTok</a>
+            <a href="#linkedin" title="LinkedIn" class="text-gray-400 hover:text-emerald-400 transition">LinkedIn</a>
+            <a href="#facebook" title="Facebook" class="text-gray-400 hover:text-emerald-400 transition">Facebook</a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-6 text-sm text-gray-400 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <p>&copy; 2026 WILLSBLOG. All rights reserved.</p>
+        <p>Expertly curated content for continuous learning.</p>
+      </div>
     </div>
   </footer>
 
 </body>
 </html>
+

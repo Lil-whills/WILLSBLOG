@@ -34,6 +34,15 @@ def can_access_dashboard(user):
     )
 
 
+def can_view_full_blog(user, blog):
+    if not blog.is_premium:
+        return True
+
+    # Stage A: premium content is only visible to dashboard-authorized users.
+    # Public users are redirected to payment.
+    return can_access_dashboard(user)
+
+
 def apply_blog_filters(queryset, request, include_status=False):
     query = request.GET.get("q", "").strip()
     category = request.GET.get("category", "").strip()
@@ -225,9 +234,16 @@ def logout(request):
     return redirect("index")
 
 
-@login_required
-def payment(request):
-    return render(request, "payment.html")
+def payment(request, id):
+    blog = get_object_or_404(Blog, id=id)
+
+    if blog.status != "published" and not can_access_dashboard(request.user):
+        raise Http404("Blog not found.")
+
+    if not blog.is_premium:
+        return redirect("blogdetails", id=blog.id)
+
+    return render(request, "payment.html", {"blog": blog})
 
 
 def blogdetails(request, id):
@@ -236,7 +252,16 @@ def blogdetails(request, id):
     if blog.status != "published" and not can_access_dashboard(request.user):
         raise Http404("Blog not found.")
 
-    return render(request, "blogdetails.html", {"blog": blog})
+    can_view_content = can_view_full_blog(request.user, blog)
+
+    return render(
+        request,
+        "blogdetails.html",
+        {
+            "blog": blog,
+            "can_view_content": can_view_content,
+        },
+    )
 
 
 @login_required
@@ -282,3 +307,8 @@ def deleteblog(request, id):
         return redirect("dashboard")
 
     return render(request, "deleteblog.html", {"blog": blog})
+
+
+def payment_coming_soon(request):
+    """Placeholder page for payment feature coming soon."""
+    return render(request, "payment_coming_soon.html")
