@@ -273,6 +273,7 @@ def postblog(request):
             form.save()
             messages.success(request, "Blog posted successfully.")
             return redirect("dashboard")
+        messages.error(request, "Please fix the form errors and try again.")
     else:
         form = BlogForm()
 

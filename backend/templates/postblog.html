@@ -75,6 +75,34 @@
           </p>
         </div>
 
+        {% if messages %}
+        <div class="px-6 md:px-8 pt-6">
+          {% for message in messages %}
+          <div class="mb-3 rounded-md px-4 py-3 text-sm {% if message.tags == 'error' %}bg-red-50 text-red-700 border border-red-200{% else %}bg-emerald-50 text-emerald-700 border border-emerald-200{% endif %}">
+            {{ message }}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if form.errors %}
+        <div class="px-6 md:px-8 pt-2">
+          <div class="rounded-md px-4 py-3 text-sm bg-red-50 text-red-700 border border-red-200">
+            <p class="font-semibold mb-2">Please correct the following:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              {% for field in form %}
+                {% for error in field.errors %}
+                <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+              {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endif %}
+
         <form action="{% if blog %}{% url 'editblog' blog.id %}{% else %}{% url 'postblog' %}{% endif %}" method="POST" enctype="multipart/form-data" class="p-6 md:p-8 space-y-6">
           {% csrf_token %}
           <!-- Title -->
@@ -88,7 +116,7 @@
               name="title"
               required
               placeholder="Enter article title"
-              value="{% if blog %}{{ blog.title }}{% endif %}"
+              value="{% if form.title.value %}{{ form.title.value }}{% elif blog %}{{ blog.title }}{% endif %}"
               class="w-full border border-gray-300 rounded-md px-4 py-3 text-gray-900 outline-none focus:border-emerald-500"
             />
           </div>
@@ -104,7 +132,7 @@
               name="author"
               required
               placeholder="Enter author name"
-              value="{% if blog %}{{ blog.author }}{% endif %}"
+              value="{% if form.author.value %}{{ form.author.value }}{% elif blog %}{{ blog.author }}{% endif %}"
               class="w-full border border-gray-300 rounded-md px-4 py-3 outline-none focus:border-blue-500"
             />
           </div>
@@ -121,7 +149,7 @@
               required
               placeholder="Write a short summary of the blog"
               class="w-full border border-gray-300 rounded-md px-4 py-3 text-gray-900 outline-none focus:border-emerald-500 resize-none"
-            >{% if blog %}{{ blog.excerpt }}{% endif %}</textarea>
+            >{% if form.excerpt.value %}{{ form.excerpt.value }}{% elif blog %}{{ blog.excerpt }}{% endif %}</textarea>
             <p class="text-xs text-gray-500 mt-2">
               This preview appears on the homepage and articles listing page.
             </p>
@@ -140,10 +168,10 @@
                 class="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none focus:border-blue-500"
               >
                 <option value="">Select category</option>
-                <option value="technology" {% if blog and blog.category == 'technology' %}selected{% endif %}>Technology</option>
-                <option value="health" {% if blog and blog.category == 'health' %}selected{% endif %}>Health</option>
-                <option value="economics" {% if blog and blog.category == 'economics' %}selected{% endif %}>Economics</option>
-                <option value="lifestyle" {% if blog and blog.category == 'lifestyle' %}selected{% endif %}>Lifestyle</option>
+                <option value="technology" {% if form.category.value == 'technology' or blog and blog.category == 'technology' and not form.category.value %}selected{% endif %}>Technology</option>
+                <option value="health" {% if form.category.value == 'health' or blog and blog.category == 'health' and not form.category.value %}selected{% endif %}>Health</option>
+                <option value="economics" {% if form.category.value == 'economics' or blog and blog.category == 'economics' and not form.category.value %}selected{% endif %}>Economics</option>
+                <option value="lifestyle" {% if form.category.value == 'lifestyle' or blog and blog.category == 'lifestyle' and not form.category.value %}selected{% endif %}>Lifestyle</option>
               </select>
             </div>
 
@@ -158,8 +186,8 @@
                 class="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none focus:border-blue-500"
               >
                 <option value="">Select status</option>
-                <option value="draft" {% if blog and blog.status == 'draft' %}selected{% endif %}>Save as Draft</option>
-                <option value="published" {% if blog and blog.status == 'published' %}selected{% endif %}>Publish Now</option>
+                <option value="draft" {% if form.status.value == 'draft' or blog and blog.status == 'draft' and not form.status.value %}selected{% endif %}>Save as Draft</option>
+                <option value="published" {% if form.status.value == 'published' or blog and blog.status == 'published' and not form.status.value %}selected{% endif %}>Publish Now</option>
               </select>
             </div>
           </div>
@@ -174,11 +202,19 @@
               id="image"
               name="image"
               accept="image/*"
+              {% if not blog %}required{% endif %}
               class="w-full border border-gray-300 rounded-md px-4 py-3 bg-white text-gray-900 outline-none focus:border-emerald-500"
             />
             <p class="text-xs text-gray-500 mt-2">
+              {% if blog and blog.image %}
+              Current image is set. Upload a new file only if you want to replace it.
+              {% else %}
               Upload a clean image that represents the article.
+              {% endif %}
             </p>
+            {% if blog and blog.image %}
+            <img src="{{ blog.image.url }}" alt="Current image" class="mt-3 w-48 h-32 object-cover rounded-md border border-gray-200" />
+            {% endif %}
           </div>
 
           <!-- Premium + Price -->
@@ -194,8 +230,8 @@
                 class="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none focus:border-blue-500"
               >
                 <option value="">Select access type</option>
-                <option value="False" {% if blog and not blog.is_premium %}selected{% endif %}>Free</option>
-                <option value="True" {% if blog and blog.is_premium %}selected{% endif %}>Premium</option>
+                <option value="False" {% if form.is_premium.value == 'False' or form.is_premium.value == 'false' or blog and not blog.is_premium and form.is_premium.value == None %}selected{% endif %}>Free</option>
+                <option value="True" {% if form.is_premium.value == 'True' or form.is_premium.value == 'true' or blog and blog.is_premium and form.is_premium.value == None %}selected{% endif %}>Premium</option>
               </select>
             </div>
 
@@ -210,7 +246,7 @@
                 min="0"
                 step="0.01"
                 placeholder="0.00"
-                value="{% if blog %}{{ blog.price }}{% endif %}"
+                value="{% if form.price.value %}{{ form.price.value }}{% elif blog %}{{ blog.price }}{% else %}0.00{% endif %}"
                 class="w-full border border-gray-300 rounded-md px-4 py-3 text-gray-900 outline-none focus:border-emerald-500"
               />
               <p class="text-xs text-gray-500 mt-2">
@@ -231,7 +267,7 @@
               required
               placeholder="Write the full blog content here..."
               class="w-full border border-gray-300 rounded-md px-4 py-3 outline-none focus:border-blue-500"
-            >{% if blog %}{{ blog.content }}{% endif %}</textarea>
+            >{% if form.content.value %}{{ form.content.value }}{% elif blog %}{{ blog.content }}{% endif %}</textarea>
           </div>
 
           <!-- Submit -->
