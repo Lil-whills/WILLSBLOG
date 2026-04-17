@@ -161,6 +161,9 @@ STORAGES = {
     },
 }
 
+# Compatibility for third-party packages that still read legacy settings.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Auth route settings for login_required and auth flow redirects.
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
